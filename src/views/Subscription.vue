@@ -1,29 +1,71 @@
 <template>
     <v-container>
+        
         <v-row>
             <v-col>
                 <v-text-field
                     color="grey"
                     label="Subject"
                 ></v-text-field>
-                <v-text-field
-                    color="grey"
-                    label="Search for operator"
-                ></v-text-field>
+            </v-col>
+        </v-row>
+
+        <v-row>
+            <v-col>
+            <v-text-field
+                color="grey"
+                label="Search for operator"
+                v-model="operatorInput"
+                @keyup.enter.native="operatorSearch()"
+            ></v-text-field>
+            </v-col>
+            <v-col>
+                <v-btn 
+                    v-for="operator in operators"
+                    :key="operator"
+                    rounded 
+                    color="#00c654" 
+                    class="white--text"
+                    style="margin: 2px"
+                    @click="removeOperator(operator)"
+                >
+                    {{operator}}
+                    <v-icon small>mdi-close</v-icon>
+                </v-btn>
+            </v-col>
+        </v-row>
+
+        <v-row>
+            <v-col>
                 <v-text-field
                     color="grey"
                     label="Search by line"
+                    v-model="lineInput"
+                    @keyup.enter.native="lineSearch()"
                 ></v-text-field>
             </v-col>
             <v-col>
-                Options
+                <v-btn 
+                    v-for="line in lines"
+                    :key="line"
+                    rounded 
+                    color="#00c654" 
+                    class="white--text"
+                    style="margin: 2px"
+                    @click="removeLine(line)"
+                >
+                    {{line}}
+                    <v-icon small>mdi-close</v-icon>
+                </v-btn>
             </v-col>
         </v-row>
+    
+        <div style="min-height: 66px"></div>
+        
         <v-row>
             <v-col>
                 <div>Send notifications to:</div>
                 <v-simple-table>
-                <!-- <template v-slot:default> -->
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -35,7 +77,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="user in users" :key="user.name" class="text-left">
+                        <tr 
+                            v-for="(user, i) in users" 
+                            :key="i" 
+                            class="text-left"
+                        >
                             <td>
                                 <v-text-field
                                     color="grey"
@@ -83,30 +129,57 @@
                                     v-model="user.sendType.sms"
                                 ></v-checkbox>
                             </td>
-                            <td> Edit </td>
+                            <td>
+                                <v-row>
+                                    <v-col>
+                                        <v-icon large @click="addRecipient()">mdi-account-plus</v-icon>
+                                    </v-col>
+                                    <v-col v-if="users.length > 1">
+                                        <v-icon large @click="removeRecipient(i)">mdi-delete</v-icon>
+                                    </v-col>
+                                </v-row>
+                            </td>
                         </tr>
                     </tbody>
-                <!-- </template> -->
                 </v-simple-table>
             </v-col>
         </v-row>
         <v-row>
             <v-col>
-                <v-btn right=true color="#00c654" class="white--text" tile=true>Create</v-btn>
+                <v-alert 
+                    text 
+                    color="#00c654"
+                    v-bind:class="{ createdSub: created }"
+                >
+                    Created successfully!
+                </v-alert>
+                <v-btn 
+                    color="#00c654" 
+                    style="float: right; margin-top: 20px" 
+                    class="white--text"
+                    @click="create()"
+                    tile
+                >
+                    Create
+                </v-btn>
             </v-col>
         </v-row>
     </v-container>
 </template>
 
 <script>
+import Vue from 'vue';
 
 export default {
     name: 'subscription',
     data: () => ({
-        isActive: false,
+        operatorInput: '',
+        lineInput: '',
+        operators: [],
+        lines: [],
+        created: false,
         users: [
             {
-                inactive: false,
                 name: 'John Doe',
                 email: 'john@test.com',
                 phone: '22222222',
@@ -119,9 +192,12 @@ export default {
                     sms: true,
                     email: false
                 }
-            },
-            {
-                inactive: true,
+            }
+        ]
+    }),
+    methods: {
+        addRecipient: function() {
+            this.users.push({
                 name: '',
                 email: '',
                 phone: '',
@@ -134,17 +210,29 @@ export default {
                     sms: false,
                     email: false
                 }
-            }
-        ]
-    }),
-    // nextRow: () =>{
-    //     console.log('focused');
-    //     this.isActive = true;
-    // }
-    methods: {
-        focusedForm: function() {
-            console.log('Focus!');
-            this.isActive = true;
+            });
+        },
+        removeRecipient: function(index) {
+            Vue.delete(this.users, index);
+        },
+        operatorSearch: function() {
+            this.operators.push(this.operatorInput);
+            this.operatorInput = '';
+        },
+        removeOperator: function(item) {
+            let index = this.operators.indexOf(item);
+            Vue.delete(this.operators, index);
+        },
+        lineSearch: function() {
+            this.lines.push(this.lineInput);
+            this.lineInput = '';
+        },
+        removeLine: function(item) {
+            let index = this.lines.indexOf(item);
+            Vue.delete(this.lines, index);
+        },
+        create: function(){
+            this.created = !this.created; 
         }
     }
 }
@@ -165,5 +253,13 @@ export default {
 
     .inactive:focus {
         opacity: 1;
+    }
+
+    .v-alert {
+        display: none;
+    }
+
+    .v-alert.createdSub {
+        display: block;
     }
 </style>

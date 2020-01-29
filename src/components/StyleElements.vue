@@ -7,13 +7,13 @@
         </v-row>
         <v-row>
             <v-col>
-                <v-alert text=true color="#00c654">
+                <v-alert text color="#00c654">
                 Donec elit libero, sodales nec, volutpat a, suscipit non, turpis. In auctor lobortis lacus.
                 </v-alert>
-                <v-alert text=true color="#dc3545">
+                <v-alert text color="#dc3545">
                 Donec elit libero, sodales nec, volutpat a, suscipit non, turpis. In auctor lobortis lacus.
                 </v-alert>
-                <v-alert text=true color="orange">
+                <v-alert text color="orange">
                 Donec elit libero, sodales nec, volutpat a, suscipit non, turpis. In auctor lobortis lacus.
                 </v-alert>
             </v-col>
@@ -25,13 +25,16 @@
         </v-row>
         <v-row class="buttons">
             <v-col>
-                <v-btn color="#00c654" class="white--text" tile=true>Button</v-btn>
+                <v-btn color="#00c654" class="white--text" tile>Button</v-btn>
             </v-col>
             <v-col>
-                <v-btn color="#dc3545" class="white--text" tile=true>Button</v-btn>
+                <v-btn color="#00c654" tile outlined>Button</v-btn>
             </v-col>
             <v-col>
-                <v-btn color="#00c654" class="white--text" rounded=true>Button</v-btn>
+                <v-btn color="#dc3545" class="white--text" tile>Button</v-btn>
+            </v-col>
+            <v-col>
+                <v-btn color="#00c654" class="white--text" rounded>Button</v-btn>
             </v-col>
         </v-row>
         <v-row>
@@ -126,10 +129,10 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="item in table" :key="item.name" class="text-left">
+                    <tr v-for="(item, i) in table" :key="i" class="text-left">
                         <td>{{ item.name }}</td>
                         <td>{{ item.description }}</td>
-                        <td><v-btn color="#00c654" class="white--text" tile=true depressed=true>Edit</v-btn></td>
+                        <td><v-btn color="#00c654" class="white--text" tile depressed>Edit</v-btn></td>
                     </tr>
                     </tbody>
                 </template>

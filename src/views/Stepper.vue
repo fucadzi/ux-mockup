@@ -2,29 +2,72 @@
 <div>
     <v-stepper
         v-model="e1"
+        style="margin-top: 40px"
     >
         <v-stepper-items>
             <v-stepper-content
-                v-for="n in steps"
-                :key="`${n}-content`"
-                :step="n"
+                step=1
             >
-                <!-- <v-card
-                    class="mb-12"
-                    height="200px"
-                >This is card content {{n}}</v-card> -->
                 <v-text-field label="Title"></v-text-field>
-                <v-textarea solo=true>
+                <v-textarea solo>
                 </v-textarea>
 
                 <v-btn
                     color="#00c654"
-                    outlined="true"
-                    @click="nextStep(n)"
+                    tile
+                    @click="nextStep(1)"
+                    class="white--text"
+                    style="float: right"
                 >
-                Continue
+                    Continue
                 </v-btn>
 
+            </v-stepper-content>
+            <v-stepper-content step=2>
+                <v-input> Next step</v-input>
+                <v-text-field label="Input"></v-text-field>
+                <v-text-field label="Input"></v-text-field>
+                <v-btn
+                    color="#00c654"
+                    tile
+                    @click="nextStep(2)"
+                    class="white--text"
+                    style="float: right"
+                >
+                    Continue
+                </v-btn>
+                <v-btn
+                    color="#00c654"
+                    tile
+                    outlined
+                    @click="prevStep(2)"
+                    style="float: right; margin-right: 12px"
+                >
+                    Back
+                </v-btn>
+            </v-stepper-content>
+            <v-stepper-content step=3>
+                <v-checkbox color="#00c654" label="Setting 1"></v-checkbox>
+                <v-checkbox color="#00c654" label="Setting 2"></v-checkbox>
+                <v-checkbox color="#00c654" label="Setting 3"></v-checkbox>
+                <v-checkbox color="#00c654" label="Setting 4"></v-checkbox>
+                <v-btn
+                    color="#00c654"
+                    tile
+                    class="white--text"
+                    style="float: right"
+                >
+                    Save
+                </v-btn>
+                <v-btn
+                    color="#00c654"
+                    tile
+                    outlined
+                    @click="prevStep(3)"
+                    style="float: right; margin-right: 12px"
+                >
+                    Back
+                </v-btn>
             </v-stepper-content>
         </v-stepper-items>
        
@@ -33,7 +76,7 @@
 
         <v-stepper-header>
             <template v-for="n in steps">
-                <v-stepper-step
+                <v-stepper-step color="#00c654"
                     :key="`${n}-step`"
                     :complete="e1 > n"
                     :step="n"
@@ -71,14 +114,15 @@ export default {
     },
     methods: {
         nextStep(n) {
-            console.log('next step', n, this.steps);
             if (n === this.steps) {
-                console.log('iz it');
                 this.e1 = 1
             } else {
                 this.e1 = n + 1
-                console.log('heloo', this.e1);
             }
+        },
+        prevStep(n) {
+            console.log('go back', n);
+            this.e1 = n-1;
         }
     }
 }
