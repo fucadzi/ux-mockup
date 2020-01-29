@@ -2,7 +2,7 @@
   <v-app>
     <v-content>
         <v-container>
-            <v-tabs grow color="#00c654">
+            <v-tabs grow color="#00c654" v-model="activeTab">
                 <v-tab color="#00c654"><router-link to="/">UI elements</router-link></v-tab>
                 <v-tab><router-link to="/table">Table</router-link></v-tab>
                 <v-tab><router-link to="/subcsription">Subscription</router-link></v-tab>
@@ -16,7 +16,26 @@
 
 <script>
     export default {
-        name: "App"
+        name: "App",
+        data: () => ({
+            activeTab: 0
+        }),
+        created() {
+            switch(this.$route.name) {
+                case 'Home':
+                    this.activeTab = 0;
+                    break;
+                case 'TablePage':
+                    this.activeTab = 1;
+                    break;
+                case 'Subscription':
+                    this.activeTab = 2;
+                    break;
+                case 'Stepper':
+                    this.activeTab = 3;
+                    break;
+            }
+        }
     };
 </script>
 

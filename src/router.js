@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Subscription from './views/Subscription.vue'
 import Stepper from './views/Stepper.vue'
-import Table from './views/Table.vue'
+import TablePage from './views/TablePage.vue'
 
 Vue.use(Router)
 
@@ -11,23 +11,23 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'Home',
       component: Home
     },
     {
       path: '/subcsription',
-      name: 'subscription',
+      name: 'Subscription',
       component: Subscription
     },
     {
       path: '/stepper',
-      name: 'stepper',
+      name: 'Stepper',
       component: Stepper
     },
     {
       path: '/table',
-      name: 'table',
-      component: Table
+      name: 'TablePage',
+      component: TablePage
     }
   ]
 })
