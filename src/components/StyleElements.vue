@@ -31,7 +31,25 @@
                 <v-btn color="#00c654" tile outlined>Button</v-btn>
             </v-col>
             <v-col>
-                <v-btn color="#dc3545" class="white--text" tile>Button</v-btn>
+
+                <v-dialog v-model="dialog" persistent max-width="290">
+                <template v-slot:activator="{ on }">
+                    <v-btn v-on="on" color="#dc3545" class="white--text" tile>Delete</v-btn>
+                </template>
+                <v-card>
+                    <v-card-title class="headline">Are you sure you want to delete this item?</v-card-title>
+                    <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="green darken-1" text @click="dialog = false">No</v-btn>
+                    <v-btn color="green darken-1" text @click="dialog = false">Yes</v-btn>
+                    </v-card-actions>
+                </v-card>
+                </v-dialog>
+
+
+
+
+                
             </v-col>
             <v-col>
                 <v-btn color="#00c654" class="white--text" rounded>Button</v-btn>
@@ -153,6 +171,7 @@ export default {
     data: () => ({
         dropdown: ['Item 1', 'Item 2', 'Item 3'],
         valid: false,
+        dialog: false,
         firstname: '',
         lastname: '',
         nameRules: [
