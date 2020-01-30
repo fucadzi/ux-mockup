@@ -1,34 +1,79 @@
 <template>
     <v-content>
+
         <v-row>
-            <v-col></v-col>
             <v-col>
-                <v-text-field
-                    v-model="search"
-                    append-icon="mdi-search"
-                    label="Search"
-                    single-line
-                    hide-details
-                    color="#00c654"
-                ></v-text-field>
+                <mgs-table />
             </v-col>
         </v-row>
         <v-row>
             <v-col>
                 
                 <v-data-table
+                    caption="Table"
                     :headers="headers"
                     :items="tableData"
                     :search="search"
-                ></v-data-table>
+                    disable-pagination
+                    hide-default-footer
+                >
+                    <template v-slot:item.systems="{ item }">
+                        <v-row
+                            v-for="system in item.systems"
+                            :key="system"
+                        >
+                            <div>{{system}}</div>
+                        </v-row>
+                    </template>
+                    <template v-slot:item.used="{ item }">
+                        <v-row
+                            v-for="(use, i) in item.used"
+                            :key="i"
+                        >
+                            <div>{{use}}</div>
+                        </v-row>
+                    </template>
+
+
+                    <template v-slot:item.action="{ item }">
+                        <v-icon
+                            style="outline: none" 
+                            class="mr-2"
+                            @click="editItem(item)"
+                        >
+                            mdi-pencil
+                        </v-icon>
+                        <v-icon
+                            style="outline: none"
+                            @click="deleteItem(item)"
+                        >
+                            mdi-delete
+                        </v-icon>
+                    </template>
+
+                </v-data-table>
             </v-col>
+        </v-row>
+
+
+
+
+        
+
+        <v-row>
+            <v-col></v-col>
         </v-row>
     </v-content>
 </template>
 
 <script>
+import MgsTable from '../components/MsgTable.vue';
+
 export default {
     name: 'TablePage',
+    components: {
+        MgsTable
+    },
     data() {
         return {
             search: '',
@@ -37,35 +82,57 @@ export default {
                     text: 'Name', value: 'name'
                 },
                 {
-                    text: 'Description', value: 'systems'
+                    text: 'Allowed systems', value: 'systems'
                 },
                 {
-                    text: 'Notes', value: 'notes'
+                    text: 'Used', value: 'used'
+                },
+                {
+                    text: 'Token', value: 'token', filterable: false  
+                },
+                {
+                    text: 'Company', value: 'company'
                 },
                 {
                     text: 'Actions', 
-                    value: 'actions',
+                    value: 'action',
                     sortable: false
-                }
+                },
+                { value: 'data-table-expand' }
             ],
             tableData: [
                 {
                     name: 'Test',
-                    systems: 'Some test',
-                    notes: 'Test test',
+                    systems: ['Kolumbus Web', 'HJH', 'Ticketing machine', 'New system'], 
+                    used: [0,0,2, 1],
+                    token: 'eWTf3qR45bijwT3ngNLqJk14JMt3kmD1o85QXR44QUDZJuLSn2TFdZqGNwtBMWd2',
+                    company: '111'
                 },
                 {
-                    name: 'Blank',
-                    systems: 'Blank 123',
-                    notes: 'Blank notes',
+                    name: 'HJH test',
+                    systems: ['HJH'],
+                    used: [0],
+                    token: '7IUhfG1VDjEAnHv01kEmdOmYNncZ5gJebKHvh4sgMp0e3fjFbhMopAVoB6ozQ1R6',
+                    company: 'random company'
                 },
                 {
-                    name: 'Abcd',
-                    systems: 'Abcd 123',
-                    notes: 'Dcba 321',
+                    name: 'Skynet',
+                    systems: ['Skynet'],
+                    used: [3],
+                    token: '7IUhfG1VDjEAnHv01kEmdOmYNncZ5gJebKHvh4sgMp0e3fjFbhMopAVoB6ozQ1R6',
+                    company: 'xyz'
                 }
             ]
         }
+    },
+    methods: {
+        editItem: function(item) {
+            console.log('edit this ', item);
+        },
+        deleteItem (item) {
+            const index = this.tableData.indexOf(item);
+            confirm('Are you sure you want to delete this item?') && this.tableData.splice(index, 1);
+        },
     }
 }
 </script>
