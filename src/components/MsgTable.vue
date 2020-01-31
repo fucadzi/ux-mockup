@@ -4,19 +4,43 @@
             <v-col>
                 <v-text-field
                     v-model="search"
-                    append-icon="mdi-search"
                     label="Search"
                     single-line
                     hide-details
                     color="#00c654"
+                    append-icon="mdi-magnify"
                 ></v-text-field>
+            </v-col>
+            <v-col class="controlBtns">
+                <v-btn 
+                    :class="{ activeBtn: layout === 'type2' }"
+                    rounded
+                    @click="layout = 'type2'" 
+                >
+                    Type 2
+                </v-btn>
+                <v-btn 
+                    :class="{ activeBtn: layout === 'type1' }"
+                    rounded
+                    @click="layout = 'type1'" 
+                >
+                    Type 1
+                </v-btn>
+                <v-btn 
+                    :class="{ activeBtn: layout === '' }"
+                    rounded
+                    @click="layout = ''" 
+                >
+                    Default
+                </v-btn>
+                    
             </v-col>
         </v-row>
         <v-row>
             <v-col>
                 
                 <v-data-table
-                    :headers="headers"
+                    :headers="computedHeaders"
                     :items="tableData"
                     :search="search"
                 >
@@ -118,41 +142,43 @@ export default {
     data() {
         return {
             search: '',
+            layout: '',
             headers: [
                 {
-                    text: 'Subject', value: 'subject'
+                    text: 'Subject', value: 'subject', layout: 'type1'
                 },
                 {
-                    text: 'Start publishing', value: 'start'
+                    text: 'Start publishing', value: 'start', layout: 'type1'
                 },
                 {
-                    text: 'End publishing', value: 'end'
+                    text: 'End publishing', value: 'end', layout: 'type1'
                 },
                 {
-                    text: 'Sent to', value: 'sent'
+                    text: 'Sent to', value: 'sent', layout: 'type2'
                 },
                 {
-                    text: 'Status', value: 'published'
+                    text: 'Status', value: 'published', layout: 'type2'
                 },
                 {
-                    text: 'Lest', value: 'lest'
+                    text: 'Lest', value: 'lest', layout: 'type2'
                 },
                 {
-                    text: 'From', value: 'from'
+                    text: 'From', value: 'from', layout: 'type1'
                 },
                 {
-                    text: 'Departure', value: 'depart'
+                    text: 'Departure', value: 'depart', layout: 'type1'
                 },
                 {
-                    text: 'Channel', value: 'channel'
+                    text: 'Channel', value: 'channel', layout: 'type2'
                 },
                 {
-                    text: 'Cause', value: 'cause'
+                    text: 'Cause', value: 'cause', layout: 'type2'
                 },
                 {
                     text: 'Actions', 
                     value: 'action',
-                    sortable: false
+                    sortable: false,
+                    layout: 'all'
                 }
             ],
             tableData: [
@@ -303,20 +329,41 @@ export default {
             ]
         }
     },
-     methods: {
+    methods: {
         getIcon: function(item) {
             return item.published;
+        },
+        showLayout: function( layout ){
+            console.log('filtering');
+            if(layout === '') {
+                return;
+            }
+        },
+        filterByLayout: function(el) {
+            if(this.layout === '' || el.layout === 'all') {
+                return true;
+            }
+
+            return el.layout === this.layout;
         }
-     }
+    },
 
-     //   Hiding columns https://stackoverflow.com/questions/52625562/hide-a-particular-header-and-its-corresponding-column-in-vuetify-datatable
-    // computed: {
-    // computedHeaders () {
-    //     return this.headers.filter(....Your filter logic here)  
-    // }
-    // }
-    // Change your headers bind in your html to point to 'computedHeaders' instead of headers
-
-    // :headers="computedHeaders"
+    computed: {
+        computedHeaders () {
+            return this.headers.filter(this.filterByLayout );  
+        }
+    }
+    
 }
 </script>
+
+<style>
+    .controlBtns .v-btn {
+        margin: 0 2px;
+        float: right;
+    }
+    .col.controlBtns .v-btn--rounded.v-btn.activeBtn {
+        color: #ffffff;
+        background-color: #00c654;
+    }
+</style>
