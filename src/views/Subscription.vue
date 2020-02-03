@@ -11,6 +11,48 @@
 
         <v-row>
             <v-col>
+
+<!-- 
+            <v-autocomplete
+                v-model="model"
+                :items="items"
+                :loading="isLoading"
+                :search-input.sync="search"
+                color="white"
+                hide-no-data
+                hide-selected
+                item-text="Description"
+                item-value="API"
+                placeholder="Search for operator"
+                append-icon="mdi-magnify"
+                return-object
+            ></v-autocomplete>
+
+            <v-expand-transition>
+            <v-list v-if="model" class="red lighten-3">
+                <v-list-item
+                v-for="(field, i) in fields"
+                :key="i"
+                >
+                <v-list-item-content>
+                    <v-list-item-title v-text="field.value"></v-list-item-title>
+                    <v-list-item-subtitle v-text="field.key"></v-list-item-subtitle>
+                </v-list-item-content>
+                </v-list-item>
+            </v-list>
+            </v-expand-transition> -->
+
+
+
+
+
+
+
+
+
+
+
+
             <v-text-field
                 color="grey"
                 label="Search for operator"
@@ -131,10 +173,10 @@
                             <td>
                                 <v-row>
                                     <v-col>
-                                        <v-icon large @click="addRecipient()">mdi-account-plus</v-icon>
+                                        <v-icon style="outline:none" large @click="addRecipient()">mdi-account-plus</v-icon>
                                     </v-col>
                                     <v-col v-if="users.length > 1">
-                                        <v-icon large @click="removeRecipient(i)">mdi-delete</v-icon>
+                                        <v-icon style="outline:none" large @click="removeRecipient(i)">mdi-delete</v-icon>
                                     </v-col>
                                 </v-row>
                             </td>
@@ -260,5 +302,9 @@ export default {
 
     .v-alert.createdSub {
         display: block;
+    }
+
+    .v-data-table th { 
+        font-size: 15px;
     }
 </style>

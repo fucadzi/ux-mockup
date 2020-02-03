@@ -15,6 +15,7 @@
                 <v-btn 
                     :class="{ activeBtn: layout === 'type2' }"
                     rounded
+                    outlined
                     @click="layout = 'type2'" 
                 >
                     Type 2
@@ -22,6 +23,7 @@
                 <v-btn 
                     :class="{ activeBtn: layout === 'type1' }"
                     rounded
+                    outlined
                     @click="layout = 'type1'" 
                 >
                     Type 1
@@ -29,6 +31,7 @@
                 <v-btn 
                     :class="{ activeBtn: layout === '' }"
                     rounded
+                    outlined
                     @click="layout = ''" 
                 >
                     Default
@@ -49,7 +52,7 @@
                         <v-progress-linear 
                             class="white--text" 
                             color="#00c654"
-                            height="30" 
+                            height="25" 
                             :value="`${item.lest}`" striped
                         >
                             {{item.lest}}%
@@ -365,5 +368,14 @@ export default {
     .col.controlBtns .v-btn--rounded.v-btn.activeBtn {
         color: #ffffff;
         background-color: #00c654;
+    }
+
+    .theme--light.v-btn.v-btn--outlined {
+        border-color:#00c654;
+        color: #00c654;
+    }
+
+    .v-data-table th {
+        font-size: 15px;
     }
 </style>

@@ -31,8 +31,8 @@
                 <v-btn color="#00c654" tile outlined>Button</v-btn>
             </v-col>
             <v-col>
-
-                <v-dialog v-model="dialog" persistent max-width="290">
+                <v-btn color="#00c654" class="white--text" rounded>Button</v-btn>
+                <!-- <v-dialog v-model="dialog" persistent max-width="290">
                 <template v-slot:activator="{ on }">
                     <v-btn v-on="on" color="#dc3545" class="white--text" tile>Delete</v-btn>
                 </template>
@@ -44,15 +44,10 @@
                     <v-btn color="green darken-1" text @click="dialog = false">Yes</v-btn>
                     </v-card-actions>
                 </v-card>
-                </v-dialog>
-
-
-
-
-                
+                </v-dialog> -->
             </v-col>
             <v-col>
-                <v-btn color="#00c654" class="white--text" rounded>Button</v-btn>
+                <v-btn color="#00c654" rounded outlined>Button</v-btn>
             </v-col>
         </v-row>
         <v-row>
@@ -60,6 +55,41 @@
                 <div class="separator"></div>
             </v-col>
         </v-row>
+
+
+        <v-row class="icons">
+            <v-col>
+                <v-icon style="outline:none">mdi-account-plus</v-icon>
+            </v-col>
+            <v-col >
+                <v-icon style="outline:none">mdi-magnify</v-icon>
+            </v-col>
+            <v-col >
+                <v-icon style="outline:none">mdi-pencil</v-icon>
+            </v-col>
+            <v-col >
+                <v-icon style="outline:none">mdi-delete</v-icon>
+            </v-col>
+            <v-col >
+                <v-icon style="outline:none" color="#00c654" small>mdi-check-circle</v-icon>
+            </v-col>
+            <v-col >
+                <v-icon style="outline:none" color="red" small>mdi-close-circle</v-icon>
+            </v-col>
+            <v-col >
+                <v-icon style="outline:none" color="grey" small>mdi-checkbox-blank-circle</v-icon>
+            </v-col>
+            <v-col >
+                <v-icon style="outline:none" color="orange" small>mdi-checkbox-blank-circle</v-icon>
+            </v-col>
+        </v-row>
+
+        <v-row>
+            <v-col>
+                <div class="separator"></div>
+            </v-col>
+        </v-row>
+
         <v-row>
             <v-col>
                 <v-select
@@ -213,5 +243,10 @@ export default {
     .buttons .col { 
         display: flex;
         justify-content: center;
+    }
+
+    .icons .col {
+        justify-content: center;
+        display: flex;
     }
 </style>

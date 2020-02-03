@@ -4,11 +4,38 @@
             v-model="e1"
             style="margin-top: 40px"
         >
+
+            <v-stepper-header>
+                <template v-for="n in steps">
+                    <v-stepper-step color="#00c654"
+                        :key="`${n}-step`"
+                        :complete="e1 > 4"
+                        :step="n"
+                        :editable=true
+                    >
+                    Step {{ n }}
+                    </v-stepper-step>
+
+                    <v-divider
+                        :key="n"
+                    ></v-divider>
+                </template>
+                <template>
+                    <v-stepper-step
+                    color="#00c654"
+                    :key="`4-step`"
+                    :complete="e1 > 4"
+                    :step="4"
+                    :editable=true
+                    >Review &amp; Publish</v-stepper-step>
+                </template>
+            </v-stepper-header>
+
             <v-stepper-items>
                 <v-stepper-content
                     step=1
                 >
-                    <v-text-field label="Title"></v-text-field>
+                    <v-text-field color="#00c654" label="Title"></v-text-field>
                     <v-textarea solo>
                     </v-textarea>
 
@@ -26,8 +53,8 @@
                 </v-stepper-content>
                 <v-stepper-content step=2>
                     <v-input> Next step</v-input>
-                    <v-text-field label="Input"></v-text-field>
-                    <v-text-field label="Input"></v-text-field>
+                    <v-text-field color="#00c654" label="Input"></v-text-field>
+                    <v-text-field color="#00c654" label="Input"></v-text-field>
                     <v-btn
                         color="#00c654"
                         tile
@@ -70,28 +97,32 @@
                         Back
                     </v-btn>
                 </v-stepper-content>
+                <v-stepper-content step=4>
+                   
+                    <v-btn
+                        color="#00c654"
+                        tile
+                        class="white--text"
+                        style="float: right"
+                    >
+                        Save &amp; Publish
+                    </v-btn>
+                    <v-btn
+                        color="#00c654"
+                        tile
+                        outlined
+                        @click="prevStep(3)"
+                        style="float: right; margin-right: 12px"
+                    >
+                        Back
+                    </v-btn>
+                </v-stepper-content>
             </v-stepper-items>
         
 
 
 
-            <v-stepper-header>
-                <template v-for="n in steps">
-                    <v-stepper-step color="#00c654"
-                        :key="`${n}-step`"
-                        :complete="e1 > n"
-                        :step="n"
-                        :editable=true
-                    >
-                    Step {{ n }}
-                    </v-stepper-step>
-
-                    <v-divider
-                        v-if="n !== steps"
-                        :key="n"
-                    ></v-divider>
-                </template>
-            </v-stepper-header>
+            
         </v-stepper>
     </v-content>
 </template>

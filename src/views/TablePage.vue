@@ -10,12 +10,12 @@
             <v-col>
                 
                 <v-data-table
-                    caption="Table"
                     :headers="headers"
                     :items="tableData"
                     :search="search"
                     disable-pagination
                     hide-default-footer
+                    disable-sort
                 >
                     <template v-slot:item.systems="{ item }">
                         <v-row
@@ -121,6 +121,13 @@ export default {
                     used: [3],
                     token: '7IUhfG1VDjEAnHv01kEmdOmYNncZ5gJebKHvh4sgMp0e3fjFbhMopAVoB6ozQ1R6',
                     company: 'xyz'
+                },
+                {
+                    name: 'QWERTY',
+                    systems: ['Skynet', 'Test system'],
+                    used: [2, 0],
+                    token: '7IUhfG1VDjEAnHv01kEmdOmYNncZ5gJebKHvh4sgMp0e3fjFbhMopAVoB6ozQ1R6',
+                    company: 'xyz'
                 }
             ]
         }
@@ -136,3 +143,9 @@ export default {
     }
 }
 </script>
+
+<style>
+    .v-data-table th {
+        font-size: 15px;
+    }
+</style>
