@@ -22,7 +22,10 @@
                             v-for="system in item.systems"
                             :key="system"
                         >
-                            <div>{{system}}</div>
+                            <div>
+                                <a v-if="system.url" :href="system.url" >{{system.system}}</a>
+                                <span v-else>{{system.system}}</span>
+                            </div>
                         </v-row>
                     </template>
                     <template v-slot:item.used="{ item }">
@@ -103,28 +106,60 @@ export default {
             tableData: [
                 {
                     name: 'Test',
-                    systems: ['Kolumbus Web', 'HJH', 'Ticketing machine', 'New system'], 
+                    systems: [
+                        {
+                            system: 'Kolumbus Web'
+                        },
+                        {
+                            system: 'HJH'
+                        },
+                        {
+                            system: 'Ticketing machine'
+                        },
+                        {
+                            system: 'New system',
+                            url: 'https://www.google.com/'
+                        }
+                    ], 
                     used: [0,0,2, 1],
                     token: 'eWTf3qR45bijwT3ngNLqJk14JMt3kmD1o85QXR44QUDZJuLSn2TFdZqGNwtBMWd2',
                     company: '111'
                 },
                 {
                     name: 'HJH test',
-                    systems: ['HJH'],
+                    systems: [
+                        {
+                            system: 'HJH'
+                        }
+                    ],
                     used: [0],
                     token: '7IUhfG1VDjEAnHv01kEmdOmYNncZ5gJebKHvh4sgMp0e3fjFbhMopAVoB6ozQ1R6',
                     company: 'random company'
                 },
                 {
                     name: 'Skynet',
-                    systems: ['Skynet'],
+                    systems: [
+                        {
+                            system: 'Skynet',
+                            url: 'https://www.google.com/'
+                        }
+                    ],
                     used: [3],
                     token: '7IUhfG1VDjEAnHv01kEmdOmYNncZ5gJebKHvh4sgMp0e3fjFbhMopAVoB6ozQ1R6',
                     company: 'xyz'
                 },
                 {
                     name: 'QWERTY',
-                    systems: ['Skynet', 'Test system'],
+                    systems: [
+                        {
+                            system: 'Skynet',
+                            url: 'https://www.google.com/'
+                        },
+                        {
+                            system: 'Test system',
+                            url: 'https://www.google.com/'
+                        }
+                    ],
                     used: [2, 0],
                     token: '7IUhfG1VDjEAnHv01kEmdOmYNncZ5gJebKHvh4sgMp0e3fjFbhMopAVoB6ozQ1R6',
                     company: 'xyz'

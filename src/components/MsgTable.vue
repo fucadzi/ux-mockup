@@ -53,7 +53,8 @@
                             class="white--text" 
                             color="#00c654"
                             height="25" 
-                            :value="`${item.lest}`" striped
+                            :value="`${item.lest}`" 
+                            striped
                         >
                             {{item.lest}}%
                         </v-progress-linear>

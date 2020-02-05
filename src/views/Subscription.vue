@@ -9,60 +9,26 @@
             </v-col>
         </v-row>
 
-        <v-row>
+        <v-row class="autocomplete-row">
             <v-col>
 
-<!-- 
+
             <v-autocomplete
-                v-model="model"
-                :items="items"
-                :loading="isLoading"
-                :search-input.sync="search"
-                color="white"
-                hide-no-data
+                v-model="modelOps"
+                :items="operators"
+                return-object
                 hide-selected
-                item-text="Description"
-                item-value="API"
+                color="grey"
                 placeholder="Search for operator"
                 append-icon="mdi-magnify"
-                return-object
             ></v-autocomplete>
 
-            <v-expand-transition>
-            <v-list v-if="model" class="red lighten-3">
-                <v-list-item
-                v-for="(field, i) in fields"
-                :key="i"
-                >
-                <v-list-item-content>
-                    <v-list-item-title v-text="field.value"></v-list-item-title>
-                    <v-list-item-subtitle v-text="field.key"></v-list-item-subtitle>
-                </v-list-item-content>
-                </v-list-item>
-            </v-list>
-            </v-expand-transition> -->
-
-
-
-
-
-
-
-
-
-
-
-
-            <v-text-field
-                color="grey"
-                label="Search for operator"
-                v-model="operatorInput"
-                @keyup.enter.native="operatorSearch()"
-            ></v-text-field>
+            
             </v-col>
             <v-col>
+
                 <v-btn 
-                    v-for="operator in operators"
+                    v-for="operator in selectedOps"
                     :key="operator"
                     rounded 
                     color="#00c654" 
@@ -71,23 +37,25 @@
                     @click="removeOperator(operator)"
                 >
                     {{operator}}
-                    <v-icon small>mdi-close</v-icon>
+                    <v-icon small style="width:12px">mdi-close</v-icon>
                 </v-btn>
             </v-col>
         </v-row>
 
-        <v-row>
+        <v-row class="autocomplete-row">
             <v-col>
-                <v-text-field
+                <v-autocomplete
+                    v-model="modelLines"
+                    :items="lines"
+                    hide-selected
                     color="grey"
-                    label="Search by line"
-                    v-model="lineInput"
-                    @keyup.enter.native="lineSearch()"
-                ></v-text-field>
+                    placeholder="Search for line"
+                    append-icon="mdi-magnify"
+                ></v-autocomplete>
             </v-col>
             <v-col>
                 <v-btn 
-                    v-for="line in lines"
+                    v-for="line in selectedLines"
                     :key="line"
                     rounded 
                     color="#00c654" 
@@ -96,12 +64,15 @@
                     @click="removeLine(line)"
                 >
                     {{line}}
-                    <v-icon small>mdi-close</v-icon>
+                    <v-icon small style="width:12px">mdi-close</v-icon>
                 </v-btn>
             </v-col>
         </v-row>
-    
-        <div style="min-height: 66px"></div>
+        <v-row>
+            <v-col>
+                <v-icon style="outline: none; float: right" large @click="addRecipient()">mdi-account-plus</v-icon>
+            </v-col>
+        </v-row>
         
         <v-row>
             <v-col>
@@ -172,11 +143,9 @@
                             </td>
                             <td>
                                 <v-row>
+                                    
                                     <v-col>
-                                        <v-icon style="outline:none" large @click="addRecipient()">mdi-account-plus</v-icon>
-                                    </v-col>
-                                    <v-col v-if="users.length > 1">
-                                        <v-icon style="outline:none" large @click="removeRecipient(i)">mdi-delete</v-icon>
+                                        <v-icon style="outline:none" @click="removeRecipient(i)">mdi-delete</v-icon>
                                     </v-col>
                                 </v-row>
                             </td>
@@ -190,7 +159,7 @@
                 <v-alert 
                     text 
                     color="#00c654"
-                    v-bind:class="{ createdSub: created }"
+                    v-bind:class="{ showInfo: created }"
                 >
                     Created successfully!
                 </v-alert>
@@ -216,10 +185,26 @@ export default {
     data: () => ({
         operatorInput: '',
         lineInput: '',
-        operators: [],
-        lines: [],
+        selectedOps: [],
+        selectedLines: [],
+        modelOps: null,
+        modelLines: null,
         created: false,
         users: [
+            {
+                name: 'Jane Doe',
+                email: 'jane@test.com',
+                phone: '33333333',
+                notifications: {
+                    delay: false,
+                    cancel: false,
+                    full: true
+                },
+                sendType: {
+                    sms: false,
+                    email: true
+                }
+            },
             {
                 name: 'John Doe',
                 email: 'john@test.com',
@@ -234,11 +219,23 @@ export default {
                     email: false
                 }
             }
-        ]
+        ],
+        operators: ['Norled AS (301)', 'Boreal Bus AS (302)', 'The Utsira liner (303)', 
+            'Røværfjord AS (304)', 'Jærbanen (305)', 'L.Rødne & Sønner AS (306)', 
+            'Norgesbuss AS (309)', 'Vy Buss AS (310)', 'Tide Buss AS (312)', 'Norled AS (314)'],
+        lines: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
     }),
+    watch: {
+        modelOps: function(val) {
+            this.selectedOps.push(val);
+        },
+        modelLines: function(val) {
+            this.selectedLines.push(val);
+        }
+    },
     methods: {
         addRecipient: function() {
-            this.users.push({
+            this.users.unshift({
                 name: '',
                 email: '',
                 phone: '',
@@ -256,21 +253,13 @@ export default {
         removeRecipient: function(index) {
             Vue.delete(this.users, index);
         },
-        operatorSearch: function() {
-            this.operators.push(this.operatorInput);
-            this.operatorInput = '';
-        },
         removeOperator: function(item) {
-            let index = this.operators.indexOf(item);
-            Vue.delete(this.operators, index);
-        },
-        lineSearch: function() {
-            this.lines.push(this.lineInput);
-            this.lineInput = '';
+            let index = this.selectedOps.indexOf(item);
+            Vue.delete(this.selectedOps, index);
         },
         removeLine: function(item) {
-            let index = this.lines.indexOf(item);
-            Vue.delete(this.lines, index);
+            let index = this.selectedLines.indexOf(item);
+            Vue.delete(this.selectedLines, index);
         },
         create: function(){
             this.created = !this.created; 
@@ -280,6 +269,10 @@ export default {
 </script>
 
 <style>
+    .v-data-table .checkbox {
+        padding-bottom: 2px;
+    }
+
     .checkbox .v-input--checkbox {
         margin-top: 0;
     }
@@ -288,23 +281,24 @@ export default {
         margin-bottom: 0;
     }
 
-    .inactive {
-        opacity: 0.5;
-    }
-
-    .inactive:focus {
-        opacity: 1;
-    }
-
     .v-alert {
         display: none;
     }
 
-    .v-alert.createdSub {
+    .v-messages {
+        min-height: 0;
+    }
+
+    .v-alert.showInfo {
         display: block;
     }
 
     .v-data-table th { 
         font-size: 15px;
+    }
+
+    .autocomplete-row .v-btn i:before {
+        right: -7px;
+        position: absolute;
     }
 </style>
