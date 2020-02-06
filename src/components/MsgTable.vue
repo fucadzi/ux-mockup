@@ -2,14 +2,28 @@
     <v-content>
         <v-row>
             <v-col>
-                <v-text-field
-                    v-model="search"
-                    label="Search"
-                    single-line
-                    hide-details
-                    color="#00c654"
-                    append-icon="mdi-magnify"
-                ></v-text-field>
+                <v-row>
+                    <v-col cols="9">
+                        <v-text-field
+                            v-model="search"
+                            label="Search"
+                            single-line
+                            hide-details
+                            color="#00c654"
+                            append-icon="mdi-magnify"
+                        ></v-text-field>
+                    </v-col>
+                    <v-col cols="3">
+                        <v-icon 
+                            small
+                            style="outline:none; padding-top: 26px;"
+                            v-if="search" 
+                            @click="search = ''"
+                        >
+                            mdi-close
+                        </v-icon>
+                    </v-col>
+                </v-row>
             </v-col>
             <v-col class="controlBtns">
                 <v-btn 

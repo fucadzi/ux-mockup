@@ -2,7 +2,7 @@
   <v-app>
     <v-content>
         <v-container>
-            <v-tabs grow color="#00c654" v-model="activeTab">
+            <v-tabs color="#00c654" v-model="activeTab">
                 <v-tab color="#00c654"><router-link to="/">UI elements</router-link></v-tab>
                 <v-tab><router-link to="/table">Table</router-link></v-tab>
                 <v-tab><router-link to="/subcsription">Subscription</router-link></v-tab>

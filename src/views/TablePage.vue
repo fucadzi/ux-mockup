@@ -19,8 +19,8 @@
                 >
                     <template v-slot:item.systems="{ item }">
                         <v-row
-                            v-for="system in item.systems"
-                            :key="system"
+                            v-for="(system, i) in item.systems"
+                            :key="i"
                         >
                             <div>
                                 <a v-if="system.url" :href="system.url" >{{system.system}}</a>
@@ -182,5 +182,9 @@ export default {
 <style>
     .v-data-table th {
         font-size: 15px;
+    }
+
+    .v-data-table .row a {
+        color: #00c654;
     }
 </style>

@@ -7,14 +7,14 @@
         </v-row>
         <v-row>
             <v-col>
-                <v-alert text color="#00c654">
-                Donec elit libero, sodales nec, volutpat a, suscipit non, turpis. In auctor lobortis lacus.
+                <v-alert class="showInfo" text color="#00c654">
+                    Donec elit libero, sodales nec, volutpat a, suscipit non, turpis. In auctor lobortis lacus.
                 </v-alert>
-                <v-alert text color="#dc3545">
-                Donec elit libero, sodales nec, volutpat a, suscipit non, turpis. In auctor lobortis lacus.
+                <v-alert class="showInfo" text color="#dc3545">
+                    Donec elit libero, sodales nec, volutpat a, suscipit non, turpis. In auctor lobortis lacus.
                 </v-alert>
-                <v-alert text color="orange">
-                Donec elit libero, sodales nec, volutpat a, suscipit non, turpis. In auctor lobortis lacus.
+                <v-alert class="showInfo" text color="orange">
+                    Donec elit libero, sodales nec, volutpat a, suscipit non, turpis. In auctor lobortis lacus.
                 </v-alert>
             </v-col>
         </v-row>
@@ -69,6 +69,9 @@
             </v-col>
             <v-col >
                 <v-icon style="outline:none">mdi-delete</v-icon>
+            </v-col>
+            <v-col>
+                <v-icon style="outline:none">mdi-close</v-icon>
             </v-col>
             <v-col >
                 <v-icon style="outline:none" color="#00c654" small>mdi-check-circle</v-icon>
@@ -134,6 +137,7 @@
             <v-col cols="12" md="4">
                 <v-text-field
                 v-model="lastname"
+                color="grey"
                 :rules="nameRules"
                 :counter="10"
                 label="Last name"
@@ -144,6 +148,7 @@
             <v-col cols="12" md="4">
                 <v-text-field
                 v-model="email"
+                color="grey"
                 :rules="emailRules"
                 label="E-mail"
                 required
@@ -165,7 +170,7 @@
                 <div class="separator"></div>
             </v-col>
         </v-row>
-        <v-row>
+        <!-- <v-row>
             <v-col>
                 <v-simple-table>
                 <template v-slot:default>
@@ -186,7 +191,7 @@
                 </template>
                 </v-simple-table>
             </v-col>
-        </v-row>
+        </v-row> -->
         <v-row>
             <v-col>
                 <div class="separator"></div>
@@ -239,6 +244,15 @@ export default {
     .col .v-alert.v-sheet {
         border-radius: 0;
     }
+
+    .v-alert .v-icon {
+        font-size: 16px;
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        color: lightgrey;
+    }
+
 
     .buttons .col { 
         display: flex;

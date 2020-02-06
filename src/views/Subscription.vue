@@ -1,6 +1,17 @@
 <template>
     <v-container>
-        <v-row>
+        <div style="min-height:60px;">
+            <v-alert 
+                text 
+                color="#00c654"
+                v-bind:class="{ showInfo: created }"
+            >
+                Created successfully!
+            </v-alert>
+        </div>
+        <v-form v-model="valid">
+        <v-row> 
+            
             <v-col>
                 <v-text-field
                     color="grey"
@@ -104,12 +115,14 @@
                                 <v-text-field
                                     color="grey"
                                     :value="user.email"
+                                    :rules="user.emailRules"
                                 ></v-text-field>
                             </td>
                             <td>
                                 <v-text-field
                                     color="grey"
-                                    :value="user.phone"
+                                    :value="user.phoneNum"
+                                    :rules="user.phoneRules"
                                 ></v-text-field>
                             </td>
                             <td class="checkbox">
@@ -134,11 +147,13 @@
                                     color="#00c654" 
                                     label="E-mail"
                                     v-model="user.sendType.email"
+                                    @click="updateRules(user)"
                                 ></v-checkbox>
                                 <v-checkbox 
                                     color="#00c654" 
                                     label="SMS"
                                     v-model="user.sendType.sms"
+                                    @click="updateRules(user)"
                                 ></v-checkbox>
                             </td>
                             <td>
@@ -156,13 +171,6 @@
         </v-row>
         <v-row>
             <v-col>
-                <v-alert 
-                    text 
-                    color="#00c654"
-                    v-bind:class="{ showInfo: created }"
-                >
-                    Created successfully!
-                </v-alert>
                 <v-btn 
                     color="#00c654" 
                     style="float: right; margin-top: 20px" 
@@ -174,6 +182,7 @@
                 </v-btn>
             </v-col>
         </v-row>
+        </v-form>
     </v-container>
 </template>
 
@@ -183,6 +192,7 @@ import Vue from 'vue';
 export default {
     name: 'subscription',
     data: () => ({
+        valid: true,
         operatorInput: '',
         lineInput: '',
         selectedOps: [],
@@ -193,8 +203,8 @@ export default {
         users: [
             {
                 name: 'Jane Doe',
+                phoneNum:'87654321',
                 email: 'jane@test.com',
-                phone: '33333333',
                 notifications: {
                     delay: false,
                     cancel: false,
@@ -203,12 +213,30 @@ export default {
                 sendType: {
                     sms: false,
                     email: true
-                }
+                },
+                emailRules: [],
+                phoneRules: []
+            },
+            {
+                name: 'Mary Smith',
+                phoneNum:'12345678',
+                email: '',
+                notifications: {
+                    delay: false,
+                    cancel: false,
+                    full: true
+                },
+                sendType: {
+                    sms: true,
+                    email: false
+                },
+                emailRules: [],
+                phoneRules: []
             },
             {
                 name: 'John Doe',
+                phoneNum: '22222222',
                 email: 'john@test.com',
-                phone: '22222222',
                 notifications: {
                     delay: true,
                     cancel: true,
@@ -217,7 +245,9 @@ export default {
                 sendType: {
                     sms: true,
                     email: false
-                }
+                },
+                emailRules: [],
+                phoneRules: [],
             }
         ],
         operators: ['Norled AS (301)', 'Boreal Bus AS (302)', 'The Utsira liner (303)', 
@@ -234,11 +264,27 @@ export default {
         }
     },
     methods: {
+        updateRules: function(user) {
+            if(user.sendType.sms) {
+                user.phoneRules = [
+                    v => !!v || 'Phone number is required'
+                ]
+            } else {
+                user.phoneRules = []; 
+            }
+            if(user.sendType.email) {
+                user.emailRules = [
+                    v => !!v || 'Email is required'
+                ]
+            } else {
+                user.emailRules = []; 
+            }
+        },
         addRecipient: function() {
             this.users.unshift({
+                phoneNum:'',
                 name: '',
                 email: '',
-                phone: '',
                 notifications: {
                     delay: false,
                     cancel: false,
@@ -247,7 +293,9 @@ export default {
                 sendType: {
                     sms: false,
                     email: false
-                }
+                },
+                emailRules: [],
+                phoneRules: [],
             });
         },
         removeRecipient: function(index) {
