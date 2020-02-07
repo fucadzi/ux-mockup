@@ -310,7 +310,8 @@ export default {
             Vue.delete(this.selectedLines, index);
         },
         create: function(){
-            this.created = !this.created; 
+            this.$router.push('table');
+            // this.created = !this.created; 
         }
     }
 }

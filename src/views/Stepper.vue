@@ -310,11 +310,9 @@ export default {
             }
         },
         prevStep(n) {
-            console.log('go back', n);
             this.e1 = n-1;
         },
         getValidation(step) {
-            console.log('validation', step);
             if(step===2){
                 return false;
             }
@@ -327,7 +325,6 @@ export default {
                 this.step2Rules = [];
                 this.notificationText = 'Published!';
                 this.saved = true;
-                
             }
         }
     }
