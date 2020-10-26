@@ -3,10 +3,11 @@
     <v-content>
         <v-container>
             <v-tabs color="#00c654" v-model="activeTab">
-                <v-tab color="#00c654"><router-link to="/">UI elements</router-link></v-tab>
+                <v-tab><router-link to="/">Create message</router-link></v-tab>
+                <v-tab color="#00c654"><router-link to="/elements">UI elements</router-link></v-tab>
                 <v-tab><router-link to="/table">Table</router-link></v-tab>
                 <v-tab><router-link to="/subcsription">Subscription</router-link></v-tab>
-                <v-tab><router-link to="/stepper">Create message</router-link></v-tab>
+                
             </v-tabs>
             <router-view></router-view>
         </v-container>
@@ -22,16 +23,16 @@
         }),
         created() {
             switch(this.$route.name) {
-                case 'Home':
+                case 'Stepper':
                     this.activeTab = 0;
                     break;
-                case 'TablePage':
+                case 'Home':
                     this.activeTab = 1;
                     break;
-                case 'Subscription':
+                case 'TablePage':
                     this.activeTab = 2;
                     break;
-                case 'Stepper':
+                case 'Subscription':
                     this.activeTab = 3;
                     break;
             }

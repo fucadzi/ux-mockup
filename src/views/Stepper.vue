@@ -24,7 +24,7 @@
                         :editable=true
                         :rules="[]"
                     >
-                    Step 1
+                    Example 1
                     </v-stepper-step>
 
                     <v-divider
@@ -38,7 +38,7 @@
                         :editable=true
                         :rules="step2Rules"
                     >
-                    Step 2
+                    Example 2
                     </v-stepper-step>
 
                     <v-divider
@@ -52,7 +52,7 @@
                         :editable=true
                         :rules="[]"
                     >
-                    Step 3
+                    Example 3
                     </v-stepper-step>
 
                     <v-divider
@@ -74,9 +74,36 @@
                 <v-stepper-content
                     step=1
                 >
-                    <v-text-field v-model="title" color="#00c654" label="Title"></v-text-field>
-                    <v-textarea v-model="text" solo>
-                    </v-textarea>
+                    <v-row>
+                        <v-col>
+                            <v-text-field v-model="title" color="#00c654" label="Title"></v-text-field>
+                            <v-textarea v-model="text" solo height="366px">
+                            </v-textarea>
+                        </v-col>
+                        <v-col>
+                            <v-checkbox class="push" v-model="setting1" color="#00c654" label="Push notifications for mobile"></v-checkbox>
+                            <div class="radio">
+                                <v-label>Message type</v-label>
+                                <v-radio-group>
+                                    <v-radio label="Information" color="#00c654"></v-radio>
+                                    <v-radio label="Warning" color="#00c654"></v-radio>
+                                    <v-radio label="Cancellation" color="#00c654"></v-radio>
+                                </v-radio-group>
+                            </div>
+                            <v-expansion-panels>
+                            <v-expansion-panel>
+                                <v-expansion-panel-header>
+                                    Engelsk innhold
+                                </v-expansion-panel-header>
+                                <v-expansion-panel-content>
+                                    <v-text-field v-model="title" color="#00c654" label="Title"></v-text-field>
+                                    <v-textarea v-model="text" solo height="366px">
+                                    </v-textarea>
+                                </v-expansion-panel-content>
+                            </v-expansion-panel>
+                            </v-expansion-panels>
+                        </v-col>
+                    </v-row>
 
                     <v-spacer></v-spacer>
                     <v-btn
@@ -110,15 +137,36 @@
 
                 </v-stepper-content>
                 <v-stepper-content step=2>
-                    <v-input> Next step</v-input>
-                    <v-text-field 
-                        v-model="input1" 
-                        color="grey" 
-                        label="Required Input"
-                        :rules="inputRules"
-                    ></v-text-field>
-                    <v-text-field v-model="input2" color="grey" label="Input"></v-text-field>
-                    
+                    <v-row>
+                        <v-col>
+                            <v-text-field v-model="title" color="#00c654" label="Title"></v-text-field>
+                            <v-textarea v-model="text" solo height="366px">
+                            </v-textarea>
+                        </v-col>
+                        <v-col>
+                            <v-checkbox class="push" v-model="setting1" color="#00c654" label="Push notifications for mobile"></v-checkbox>
+                            <v-select
+                                class="messageType"
+                                :items="dropdown" 
+                                label="Message type"
+                                solo
+                            ></v-select>
+                            <v-expansion-panels>
+                            <v-expansion-panel>
+                                <v-expansion-panel-header>
+                                    Engelsk innhold
+                                </v-expansion-panel-header>
+                                <v-expansion-panel-content>
+                                    <v-text-field v-model="title" color="#00c654" label="Title"></v-text-field>
+                                    <v-textarea v-model="text" solo height="366px">
+                                    </v-textarea>
+                                </v-expansion-panel-content>
+                            </v-expansion-panel>
+                            </v-expansion-panels>
+                        </v-col>
+                    </v-row>
+
+                    <v-spacer></v-spacer>
                     <v-btn
                         color="#00c654"
                         tile
@@ -157,10 +205,38 @@
                     </v-btn>
                 </v-stepper-content>
                 <v-stepper-content step=3>
-                    <v-checkbox v-model="setting1" color="#00c654" label="Setting 1"></v-checkbox>
-                    <v-checkbox v-model="setting2" color="#00c654" label="Setting 2"></v-checkbox>
-                    <v-checkbox v-model="setting3" color="#00c654" label="Setting 3"></v-checkbox>
-                    <v-checkbox v-model="setting4" color="#00c654" label="Setting 4"></v-checkbox>
+                    <v-row>
+                        <v-col>
+                            <v-text-field v-model="title" color="#00c654" label="Title"></v-text-field>
+                            <v-textarea v-model="text" solo height="366px">
+                            </v-textarea>
+                        </v-col>
+                        <v-col>
+                            <v-checkbox v-model="setting1" class="push" color="#00c654" label="Push notifications for mobile"></v-checkbox>
+                            <v-autocomplete
+                                v-model="modelMsgType"
+                                :items="dropdown"
+                                return-object
+                                color="grey"
+                                placeholder="Message type"
+                                append-icon="mdi-magnify"
+                            ></v-autocomplete>
+                            <v-expansion-panels>
+                            <v-expansion-panel>
+                                <v-expansion-panel-header>
+                                    Engelsk innhold
+                                </v-expansion-panel-header>
+                                <v-expansion-panel-content>
+                                    <v-text-field v-model="title" color="#00c654" label="Title"></v-text-field>
+                                    <v-textarea v-model="text" solo height="366px">
+                                    </v-textarea>
+                                </v-expansion-panel-content>
+                            </v-expansion-panel>
+                            </v-expansion-panels>
+                        </v-col>
+                    </v-row>
+
+                    <v-spacer></v-spacer>
                     
                     <v-btn
                         color="#00c654"
@@ -287,7 +363,10 @@ export default {
             setting3: false,
             setting4: false,
             inputRules: [v => !!v || 'This field is required'],
-            step2Rules: []
+            step2Rules: [],
+            dropdown: ['Information', 'Warning', 'Cancellation'],
+            modelMsgType: null,
+            msgType: null
         }
     },
     watch: {
@@ -299,6 +378,9 @@ export default {
         e1() {
             this.saved = false;
             this.notificationText = null;
+        },
+        modelMsgType: function(val) {
+            this.msgType = val;
         }
     },
     methods: {
@@ -330,3 +412,13 @@ export default {
     }
 }
 </script>
+
+<style>
+    .push, .radio, .v-autocomplete {
+        margin-bottom: 16px;
+    }
+
+    .messageType .v-input__slot {
+        padding-left: 24px !important;
+    }
+</style>
